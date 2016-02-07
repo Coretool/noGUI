@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+        <title>Yunitto</title>
+        <style>            
+            .shell {
+                display: none;
+                width: 100vw;
+                height: 100vh;
+                top: 0px;
+                left: 0px;
+                position: fixed;
+            }
+            
+            .box {
+                width: 100vw;
+                height: 100vh;
+                top: 0px;
+                left: 0px;
+                position: fixed;
+            }
+
+            .err {
+                color: #FFFFFF;
+                text-align: center;
+                font-size: 20px;
+                margin-top: 5%;
+            }
+            
+            .err_title {
+                color: #FFFFFF;
+                text-align: center;
+                font-size: 40px;
+                margin-top: 40%;
+            }
+            
+            .purple {
+                background-color: #9C00CC;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="shell" class="shell purple">
+            <canvas id="target" width="1920p" height="1080p"style="width: 100%; height: 100%;">
+                <h1 id="err_title" class="err_title">Oh no!</h1>
+                <h4 id="err" class="err">Your browser doesn't support html5 canvases! :(</h4>
+            </canvas>
+        </div>
+        <div id="htmlbox" class="box">
+           
+        </div>
+    </body>
+    <script>
+        // window.onerror = function(msg, url, linenumber) { alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber); return true; }
+        // URL format http://0.0.0.0:port/#socket_port
+        var htmlbox = document.getElementById("htmlbox");
+        var ws;
+        // alert("ws://" + window.location.hostname + ":" + window.location.hash.replace("#", ""));
+        if(window.location.protocol == "http:") {
+            ws = new WebSocket("ws://" + window.location.hostname + ":" + window.location.hash.replace("#", ""));
+        } else {
+            ws = new WebSocket("wss://" + window.location.hostname + ":" + window.location.hash.replace("#", ""));
+        }
+        
+        ws.onmessage = function (event) {
+            event.preventDefault();
+            // alert(event.data);
+            if(event.data.charAt(0) == "1") { // url
+                var url = event.data.substring(1, event.data.length);
+                url = url.replace("ACCESS_IP", window.location.hostname);
+                // alert(url);
+                htmlbox.innerHTML = '<iframe src="' + url + '" style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"> Your browser does not support iframes </iframe>'
+            } else if(event.data.charAt(0) == "2") { // html
+                htmlbox.innerHTML = event.data.substring(1, event.data.length - 1);
+            } else if(event.data.charAt(0) == "3") { // canvas
+                
+            } else {
+                
+            }
+        };
+        
+        ws.onclose = function (event) {
+            // report issue to user
+        };
+        
+        ws.onerror = function (event) {
+            // report error to user at gfruit
+        };
+    </script>
+</html>
