@@ -2,26 +2,55 @@
 
   This is a first attempt to give NodeOS a working gui  ! It doesn't have a fancy name yet, so get creative if you want it to have a cool one ;)
 
-  ##### Building and Configuring QT5
+
+##### Building and Configuring QT5
 
 Follow this instructions to build a static QT5 version
 
   [1] Follow the   [instructions](https://wiki.qt.io/Building-Qt-5-from-Git) on how to clone the source
 
-[2] Copy my configure.sh script to your source location
+  [2] And now :
 
-[3] Type  `make` and grab some popcorn
+  ```
+  cd /path/to/Qt
+./config.sh
+make
 
-[4] Install it with `make install`
+  ```
 
-##### Building the renderer
+Note that the `config.sh` file can be found in this repo and that you have to change the path to qt (replace `/path/to/QT ` with your path)
 
-You will need at properly installed QT5 version
+[3] Let's build **noGui**:  
 
-[1] `cd` to the renderer source direction
+> Now run qmake to create a new makefile for the application, and do a clean build to create the statically linked executable:
+(QT WIKI)
 
-[2]  Type `qmake`
+This will run the build against the new static libs
 
-[3] Now run `make`
+```
+make clean
+PATH=/path/to/Qt/bin:$PATH
+export PATH
+qmake -config release
+make
 
-[4] To test if it is really static, type `ldd ./[application name ] `
+```
+
+To check if it worked , type `ldd ./[executable name]`.
+
+##### Running noGui
+
+To run noGui you need either a linuxfb or EGLFS
+
+Run on fb:
+
+```
+./noGui -platform linuxfb http://url.com
+
+```
+Run on EGLFS (recommended)
+```
+./noGui .platform eglfs http://url.com
+```
+
+**Note that you have to add http://**

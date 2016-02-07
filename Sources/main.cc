@@ -3,27 +3,25 @@
 #include <QtPlugin>
 
 
+
 /*  TODO
-*   Add WebView markup (eg. link markup)
-*  Add ability to change webview content while app is running
+*  add WebView markup (eg. link markup)(?)
+*  add ability to change webview content while app is running
+*  check if the URL is correct (-> if-else)
 */
 
 int main(int argc, char *argv[])
 {
-    //static helpers
-    //Q_IMPORT_PLUGIN(webkitwidgets)
-
-    if(argc <2) {
-        perror("You need to specify a valid URL! | Eg: http://example.com");
-      } else {
-        char* url = argv[1] //get url from command line
-
+    //static only
+    Q_IMPORT_PLUGIN(webview);
+    Q_IMPORT_PLUGIN(core);
 
     QApplication app(argc, argv);
     QWebView view;
-    view.showFullScreen(); //show full screen... maybe add back to normal size ?
-    view.load(QUrl(url));
+
+    view.show(); //shows full screen on fb and EGLFS
+    view.load(QUrl(QCoreApplication::arguments().at(1)));
 
     return app.exec();
-  }
+
 }
