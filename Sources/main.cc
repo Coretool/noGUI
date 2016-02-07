@@ -12,16 +12,23 @@
 
 int main(int argc, char *argv[])
 {
-    //static only
-    Q_IMPORT_PLUGIN(webview);
-    Q_IMPORT_PLUGIN(core);
+
+
 
     QApplication app(argc, argv);
+
     QWebView view;
+
+    if(QCoreApplication::arguments().count() < 2) {
+        perror("You have to add url like http://example.com");
+    } else {
+
+
 
     view.show(); //shows full screen on fb and EGLFS
     view.load(QUrl(QCoreApplication::arguments().at(1)));
 
     return app.exec();
 
+    }
 }
