@@ -1,5 +1,5 @@
-QTPLUGIN             += core gui
-QTPLUGIN             += webkitwidgets
+QT       += core gui
+QT             += webkitwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -9,12 +9,4 @@ TEMPLATE = app
 SOURCES += \
     Sources/main.cc
 
-CONFIG += static
-static {
 
-    CONFIG += static
-    QTPLUGIN += core gui webkitwidgets
-
-    DEFINES += STATIC
-    message("Static build.")
-}
