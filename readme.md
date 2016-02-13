@@ -1,6 +1,6 @@
 #### NodeOS HTML Renderer
 
-  This is a first attempt to give NodeOS a working gui  ! It doesn't have a fancy name yet, so get creative if you want it to have a cool one ;)
+  This is a first attempt to give NodeOS a working gui  ! It's name is prettey simple: **N**ode**O**s-**Gui**.
 
 
 ##### Building and Configuring QT5
