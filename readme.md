@@ -38,6 +38,10 @@ make
 
 To check if it worked , type `ldd ./[executable name]`.
 
+##### using the build script
+
+Nothing special, just copy and paste it into the project root and run it (maybe you'll need root)
+
 ##### Running noGui
 
 To run noGui you need either a linuxfb or EGLFS
