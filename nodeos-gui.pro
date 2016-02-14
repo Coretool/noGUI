@@ -1,12 +1,9 @@
-QT       += core gui
-QT             += webkitwidgets
+QT += core gui
+QT += webkitwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = noGui
+TARGET   = noGui
 TEMPLATE = app
 
-SOURCES += \
-    Sources/main.cc
-
-
+SOURCES += main.cc
