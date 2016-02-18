@@ -2,6 +2,8 @@
 #include <QWebView>
 #include <QtPlugin>
 
+//Q_IMPORT_PLUGIN(linuxfb)
+
 
 /*  TODO
  *  add WebView markup (eg. link markup)(?)

@@ -1,3 +1,7 @@
+CONFIG += static
+
+QTPLUGIN += qlinuxfb
+
 QT += core gui
 QT += webkitwidgets
 
