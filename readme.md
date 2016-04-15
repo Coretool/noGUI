@@ -22,19 +22,7 @@ Note that the `config.sh` file can be found in this repo and that you have to ch
 
 [3] Let's build **noGui**:  
 
-> Now run qmake to create a new makefile for the application, and do a clean build to create the statically linked executable:
-(QT WIKI)
-
-This will run the build against the new static libs
-
-```
-make clean
-PATH=/path/to/Qt/bin:$PATH
-export PATH
-qmake -config release
-make
-
-```
+Nothing easier than that. Just execute `./build.sh` 
 
 To check if it worked , type `ldd ./[executable name]`.
 
