@@ -5,26 +5,13 @@
 
 ##### Building and Configuring QT5
 
-Follow this instructions to build a static QT5 version
-
-  [1] Follow the   [instructions](https://wiki.qt.io/Building-Qt-5-from-Git) on how to clone the source
-
-  [2] And now :
-
-  ```
-  cd /path/to/Qt
-./config.sh
-make
-
-  ```
-
-Note that the `config.sh` file can be found in this repo and that you have to change the path to qt (replace `/path/to/QT ` with your path)
-
-[3] Let's build **noGui**:  
+Let's build **noGui**:  
 
 Nothing easier than that. Just execute `./build.sh` 
 
-To check if it worked , type `ldd ./[executable name]`.
+This will clone the qt repo, build a static binary and build noGui. 
+
+To check if it worked , type `ldd ./[noGUI executable]`.
 
 ##### using the build script
 
