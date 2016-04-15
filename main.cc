@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     view.show(); //shows full screen on fb and EGLFS
     view.load(QUrl(QCoreApplication::arguments().at(1)));
     } catch(...) {
-      perror("exception");
+      perror(std::current_exception());
     } 
     return app.exec();
   }
