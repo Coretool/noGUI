@@ -8,6 +8,14 @@ MAKE="make --jobs=$JOBS"
 QMAKE=`pwd`/build/qtbase/bin/qmake
 
 
+# Clean object dir and return the input error
+function err(){
+  rm -rf $OUT_DIR
+  rmdir -p --ignore-fail-on-non-empty `dirname $OUT_DIR`
+  exit $1
+}
+
+
 # ICU
 
 ICU_URL=http://download.icu-project.org/files/icu4c/56.1/icu4c-56_1-src.tgz
@@ -20,6 +28,8 @@ if [[ ! -d $SRC_DIR ]]; then
 fi
 
 if [[ ! -d $OUT_DIR ]]; then
+  rm -rf `pwd`/build/qtbase
+
   rm   -rf ${OUT_DIR}_obj &&
   mkdir -p ${OUT_DIR}_obj || exit 3
 
@@ -38,7 +48,7 @@ if [[ ! -d $OUT_DIR ]]; then
 #    $MAKE || exit 6
     $MAKE        &&
     make install || exit 6
-  ) || exit $?
+  ) || err $?
 
   rm -rf ${OUT_DIR}_obj || exit 7
 fi
@@ -59,6 +69,8 @@ if [[ ! -d $SRC_DIR ]]; then
 fi
 
 if [[ ! -d $OUT_DIR ]]; then
+  rm -rf `pwd`/build/qtwebkit
+
   mkdir -p $OUT_DIR || exit 11
 
   (
@@ -83,14 +95,15 @@ if [[ ! -d $OUT_DIR ]]; then
         -silent          \
         -no-fontconfig   \
         -no-dbus         \
-        -no-xcb          \
         -icu -continue   \
         -L $ICU_LIB      \
         -I $ICU_INC      \
+        -qt-xcb          \
         -linuxfb         || exit 13
+#        -no-xcb          \
 
     $MAKE || exit 14
-  ) || exit $?
+  ) || err $?
 fi
 
 export SQLITE3SRCDIR=$SRC_DIR/src/3rdparty/sqlite
@@ -108,7 +121,9 @@ if [[ ! -d $SRC_DIR ]]; then
   git clone git://code.qt.io/qt/qtwebkit.git $SRC_DIR || exit 20
 fi
 
-#if [[ ! -d $OUT_DIR ]]; then
+if [[ ! -d $OUT_DIR ]]; then
+  rm -rf `pwd`/build/nogui
+
   mkdir -p $OUT_DIR || exit 21
 
   (
@@ -117,8 +132,8 @@ fi
     $QMAKE -config release $SRC_DIR || exit 23
 
     $MAKE || exit 24
-  ) || exit $?
-#fi
+  ) || err $?
+fi
 
 
 # noGUI
@@ -126,7 +141,7 @@ fi
 SRC_DIR=`pwd`
 OUT_DIR=`pwd`/build/nogui
 
-if [[ ! -d $OUT_DIR ]]; then
+#if [[ ! -d $OUT_DIR ]]; then
   mkdir -p $OUT_DIR || exit 30
 
   (
@@ -135,5 +150,5 @@ if [[ ! -d $OUT_DIR ]]; then
     $QMAKE -config release $SRC_DIR || exit 32
 
     $MAKE || exit 33
-  ) || exit $?
-fi
+  ) || err $?
+#fi
