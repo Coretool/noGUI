@@ -20,9 +20,13 @@ int main(int argc, char *argv[])
     perror("You have to add url like http://example.com");
   else
   {
+    
+    try {
     view.show(); //shows full screen on fb and EGLFS
     view.load(QUrl(QCoreApplication::arguments().at(1)));
-
+    } catch(...) {
+      perror(std::current_exception());
+    } 
     return app.exec();
   }
 }
