@@ -10,23 +10,19 @@
  *  add ability to change webview content while app is running
  *  check if the URL is correct (-> if-else)
  */
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   QApplication app(argc, argv);
 
-  QWebView view;
-
+  // Check arguments
   if(QCoreApplication::arguments().count() < 2)
-    perror("You have to add url like http://example.com");
-  else
-  {
-    
-    try {
-    view.show(); //shows full screen on fb and EGLFS
-    view.load(QUrl(QCoreApplication::arguments().at(1)));
-    } catch(...) {
-      perror(std::current_exception());
-    } 
-    return app.exec();
-  }
+    qFatal("You have to add url like http://example.com");
+
+  // Load and show url
+  QWebView view;
+  view.load(QUrl(QCoreApplication::arguments().at(1)));
+  view.show();  // shows full screen on fbdev and EGLFS
+
+  // Start browser
+  return app.exec();
 }
