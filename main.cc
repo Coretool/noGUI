@@ -16,11 +16,11 @@ int main(int argc, char* argv[])
 
   // Check arguments
   if(QCoreApplication::arguments().count() < 2)
-    qFatal("You have to add url like http://example.com");
+    qFatal("You have to add url like example.com (make sure the protocol is http://, it is auto added)");
 
   // Load and show url
   QWebView view;
-  view.load(QUrl(QCoreApplication::arguments().at(1)));
+  view.load("http://" + QUrl(QCoreApplication::arguments().at(1)));
   view.show();  // shows full screen on fbdev and EGLFS
 
   // Start browser
