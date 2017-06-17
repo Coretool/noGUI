@@ -1,5 +1,5 @@
 #include <QApplication>
-#include <QWebView>
+#include <QtWebEngineWidgets>
 #include <QtPlugin>
 
 //Q_IMPORT_PLUGIN(linuxfb)
@@ -16,11 +16,11 @@ int main(int argc, char* argv[])
 
   // Check arguments
   if(QCoreApplication::arguments().count() < 2)
-    qFatal("You have to add url like example.com (make sure the protocol is http://, it is auto added)");
+    qFatal("Usage: noGUI [url with protocol]");
 
   // Load and show url
-  QWebView view;
-  view.load("http://" + QUrl(QCoreApplication::arguments().at(1)));
+  QWebEngineView view;
+  view.load(QUrl(QCoreApplication::arguments().at(1)));
   view.show();  // shows full screen on fbdev and EGLFS
 
   // Start browser
