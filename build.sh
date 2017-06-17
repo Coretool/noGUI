@@ -112,13 +112,13 @@ export CMAKE_LIBRARY_PATH=$ICU_LIB
 export CMAKE_INCLUDE_PATH=$ICU_INC
 
 
-# qtwebkit
+# qtwebengine
 
-SRC_DIR=`pwd`/deps/qtwebkit
-OUT_DIR=`pwd`/build/qtwebkit
+SRC_DIR=`pwd`/deps/qtwebengine
+OUT_DIR=`pwd`/build/qtwebengine
 
 if [[ ! -d $SRC_DIR ]]; then
-  git clone git://code.qt.io/qt/qtwebkit.git $SRC_DIR || exit 20
+  git clone git://code.qt.io/qt/qtwebengine.git $SRC_DIR || exit 20
 fi
 
 if [[ ! -d $OUT_DIR ]]; then
