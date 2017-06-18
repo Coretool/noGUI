@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+
+ICU_VERSION=59
+QT_VERSION=5.9
+
+ICU_URL=http://download.icu-project.org/files/icu4c/${ICU_VERSION}.1/icu4c-${ICU_VERSION}_1-src.tgz
+QTBASE_URL=http://download.qt.io/archive/qt/$QT_VERSION/$QT_VERSION.0/submodules/qtbase-opensource-src-$QT_VERSION.0.tar.xz
+QTWEBENGINE_URL=http://download.qt.io/archive/qt/$QT_VERSION/$QT_VERSION.0/submodules/qtwebengine-opensource-src-$QT_VERSION.0.tar.xz
+
+
 if [[ -z $JOBS ]]; then
   JOBS=$((`getconf _NPROCESSORS_ONLN` + 1))
 fi
@@ -16,9 +25,10 @@ function err(){
 }
 
 
+#
 # ICU
+#
 
-ICU_URL=http://download.icu-project.org/files/icu4c/56.1/icu4c-56_1-src.tgz
 SRC_DIR=`pwd`/deps/icu
 OUT_DIR=`pwd`/build/icu
 
@@ -28,7 +38,7 @@ if [[ ! -d $SRC_DIR ]]; then
 fi
 
 if [[ ! -d $OUT_DIR ]]; then
-  rm -rf `pwd`/build/qtbase
+  rm -rf `pwd`/build/qtbase || exit 2
 
   rm   -rf ${OUT_DIR}_obj &&
   mkdir -p ${OUT_DIR}_obj || exit 3
@@ -59,17 +69,20 @@ ICU_INC=$OUT_DIR/include
 export LD_LIBRARY_PATH=$ICU_LIB
 
 
+#
 # qtbase
+#
 
 SRC_DIR=`pwd`/deps/qtbase
 OUT_DIR=`pwd`/build/qtbase
 
 if [[ ! -d $SRC_DIR ]]; then
-  git clone git://code.qt.io/qt/qtbase.git $SRC_DIR || exit 10
+  mkdir -p $SRC_DIR                                              &&
+  curl -L $QTBASE_URL | tar -xJ --strip-components=1 -C $SRC_DIR || exit 10
 fi
 
 if [[ ! -d $OUT_DIR ]]; then
-  rm -rf `pwd`/build/qtwebkit
+  rm -rf `pwd`/build/qtwebengine
 
   mkdir -p $OUT_DIR || exit 11
 
@@ -80,9 +93,7 @@ if [[ ! -d $OUT_DIR ]]; then
         -prefix $OUT_DIR \
         -opensource      \
         -confirm-license \
-        -static          \
         -no-sql-sqlite   \
-        -no-pkg-config   \
         -qt-zlib         \
         -qt-libpng       \
         -qt-libjpeg      \
@@ -93,13 +104,15 @@ if [[ ! -d $OUT_DIR ]]; then
         -nomake tools    \
         -no-qml-debug    \
         -silent          \
-        -no-fontconfig   \
-        -no-dbus         \
         -icu -continue   \
         -L $ICU_LIB      \
         -I $ICU_INC      \
         -qt-xcb          \
         -linuxfb         || exit 13
+#        -static          \
+#        -no-dbus         \
+#        -no-fontconfig   \
+#        -no-pkg-config   \
 #        -no-xcb          \
 
     $MAKE || exit 14
@@ -112,13 +125,16 @@ export CMAKE_LIBRARY_PATH=$ICU_LIB
 export CMAKE_INCLUDE_PATH=$ICU_INC
 
 
+#
 # qtwebengine
+#
 
 SRC_DIR=`pwd`/deps/qtwebengine
 OUT_DIR=`pwd`/build/qtwebengine
 
 if [[ ! -d $SRC_DIR ]]; then
-  git clone git://code.qt.io/qt/qtwebengine.git $SRC_DIR || exit 20
+  mkdir -p $SRC_DIR                                                   &&
+  curl -L $QTWEBENGINE_URL | tar -xJ --strip-components=1 -C $SRC_DIR || exit 20
 fi
 
 if [[ ! -d $OUT_DIR ]]; then
@@ -136,7 +152,9 @@ if [[ ! -d $OUT_DIR ]]; then
 fi
 
 
+#
 # noGUI
+#
 
 SRC_DIR=`pwd`
 OUT_DIR=`pwd`/build/nogui
