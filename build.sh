@@ -25,7 +25,9 @@ function err(){
 }
 
 
+#
 # ICU
+#
 
 SRC_DIR=`pwd`/deps/icu
 OUT_DIR=`pwd`/build/icu
@@ -67,7 +69,9 @@ ICU_INC=$OUT_DIR/include
 export LD_LIBRARY_PATH=$ICU_LIB
 
 
+#
 # qtbase
+#
 
 SRC_DIR=`pwd`/deps/qtbase
 OUT_DIR=`pwd`/build/qtbase
@@ -121,7 +125,9 @@ export CMAKE_LIBRARY_PATH=$ICU_LIB
 export CMAKE_INCLUDE_PATH=$ICU_INC
 
 
+#
 # qtwebengine
+#
 
 SRC_DIR=`pwd`/deps/qtwebengine
 OUT_DIR=`pwd`/build/qtwebengine
@@ -146,7 +152,9 @@ if [[ ! -d $OUT_DIR ]]; then
 fi
 
 
+#
 # noGUI
+#
 
 SRC_DIR=`pwd`
 OUT_DIR=`pwd`/build/nogui

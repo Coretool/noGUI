@@ -1,35 +1,36 @@
-#### NodeOS HTML Renderer
+# NodeOS HTML Renderer
 
-  This is a first attempt to give NodeOS a working gui  ! It's name is prettey simple: **N**ode**O**s-**Gui**.
+This is a first try to give NodeOS a working GUI! It's name is pretty simple:
+**N**ode**O**s-**GUI**.
 
 
-##### Building and Configuring QT5
+## Building and Configuring QT5
 
-Let's build **noGui**:  
+Let's build **noGUI**:
 
-Nothing easier than that. Just execute `./build.sh` 
+Nothing easier than that. Just execute `./build.sh`. This will clone the Qt
+repo, build a static binary and build noGUI. To check if it worked, type
+`ldd ./[noGUI executable]`.
 
-This will clone the qt repo, build a static binary and build noGui. 
+## Using the build script
 
-To check if it worked , type `ldd ./[noGUI executable]`.
+Nothing special, just copy and paste it into the project root and run it (maybe
+you'll need root).
 
-##### using the build script
+## Running noGUI
 
-Nothing special, just copy and paste it into the project root and run it (maybe you'll need root)
+To run noGui you need either a linux framebuffer or EGLFS.
 
-##### Running noGui
+Run on FbDev:
 
-To run noGui you need either a linuxfb or EGLFS
-
-Run on fb:
-
+```sh
+./noGUI -platform linuxfb http://url.com
 ```
-./noGui -platform linuxfb http://url.com
 
-```
 Run on EGLFS (recommended)
-```
-./noGui .platform eglfs http://url.com
+
+```sh
+./noGUI .platform eglfs http://url.com
 ```
 
 **Note that you have to add http://**
