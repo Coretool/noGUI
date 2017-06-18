@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+
+ICU_VERSION=59
+QT_VERSION=5.9
+
+ICU_URL=http://download.icu-project.org/files/icu4c/${ICU_VERSION}.1/icu4c-${ICU_VERSION}_1-src.tgz
+QTBASE_URL=http://download.qt.io/archive/qt/$QT_VERSION/$QT_VERSION.0/submodules/qtbase-opensource-src-$QT_VERSION.0.tar.xz
+QTWEBENGINE_URL=http://download.qt.io/archive/qt/$QT_VERSION/$QT_VERSION.0/submodules/qtwebengine-opensource-src-$QT_VERSION.0.tar.xz
+
+
 if [[ -z $JOBS ]]; then
   JOBS=$((`getconf _NPROCESSORS_ONLN` + 1))
 fi
@@ -18,7 +27,6 @@ function err(){
 
 # ICU
 
-ICU_URL=http://download.icu-project.org/files/icu4c/56.1/icu4c-56_1-src.tgz
 SRC_DIR=`pwd`/deps/icu
 OUT_DIR=`pwd`/build/icu
 
@@ -65,7 +73,8 @@ SRC_DIR=`pwd`/deps/qtbase
 OUT_DIR=`pwd`/build/qtbase
 
 if [[ ! -d $SRC_DIR ]]; then
-  git clone git://code.qt.io/qt/qtbase.git $SRC_DIR || exit 10
+  mkdir -p $SRC_DIR                                              &&
+  curl -L $QTBASE_URL | tar -xJ --strip-components=1 -C $SRC_DIR || exit 10
 fi
 
 if [[ ! -d $OUT_DIR ]]; then
@@ -118,7 +127,8 @@ SRC_DIR=`pwd`/deps/qtwebengine
 OUT_DIR=`pwd`/build/qtwebengine
 
 if [[ ! -d $SRC_DIR ]]; then
-  git clone git://code.qt.io/qt/qtwebengine.git $SRC_DIR || exit 20
+  mkdir -p $SRC_DIR                                                   &&
+  curl -L $QTWEBENGINE_URL | tar -xJ --strip-components=1 -C $SRC_DIR || exit 20
 fi
 
 if [[ ! -d $OUT_DIR ]]; then
