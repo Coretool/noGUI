@@ -36,7 +36,7 @@ if [[ ! -d $SRC_DIR ]]; then
 fi
 
 if [[ ! -d $OUT_DIR ]]; then
-  rm -rf `pwd`/build/qtbase
+  rm -rf `pwd`/build/qtbase || exit 2
 
   rm   -rf ${OUT_DIR}_obj &&
   mkdir -p ${OUT_DIR}_obj || exit 3
@@ -78,7 +78,7 @@ if [[ ! -d $SRC_DIR ]]; then
 fi
 
 if [[ ! -d $OUT_DIR ]]; then
-  rm -rf `pwd`/build/qtwebkit
+  rm -rf `pwd`/build/qtwebengine
 
   mkdir -p $OUT_DIR || exit 11
 
