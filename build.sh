@@ -89,9 +89,7 @@ if [[ ! -d $OUT_DIR ]]; then
         -prefix $OUT_DIR \
         -opensource      \
         -confirm-license \
-        -static          \
         -no-sql-sqlite   \
-        -no-pkg-config   \
         -qt-zlib         \
         -qt-libpng       \
         -qt-libjpeg      \
@@ -102,13 +100,15 @@ if [[ ! -d $OUT_DIR ]]; then
         -nomake tools    \
         -no-qml-debug    \
         -silent          \
-        -no-fontconfig   \
-        -no-dbus         \
         -icu -continue   \
         -L $ICU_LIB      \
         -I $ICU_INC      \
         -qt-xcb          \
         -linuxfb         || exit 13
+#        -static          \
+#        -no-dbus         \
+#        -no-fontconfig   \
+#        -no-pkg-config   \
 #        -no-xcb          \
 
     $MAKE || exit 14
